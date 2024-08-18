@@ -25,11 +25,11 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="decrementBtn" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="input-1" type="text" class="form-control text-center" value="1">
+                           <button id="incrementBtn" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$1219</h5>
+                        <h5>$ <span id="mobilePrice">1219</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -43,12 +43,12 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="decrementBtn2" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="input-2" type="text" class="form-control text-center" value="1">
+                           <button id="incrementBtn2" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$59</h5>
+                        <h5>$<span id="casePrice">59</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -77,6 +77,78 @@
          </div>
       </div>
    </section>
+
+
+   <script>
+      // increment button event handler
+      const incrementBtn=document.getElementById('incrementBtn');
+      incrementBtn.addEventListener('click',function(){
+         const numberOfProduct=inc('input-1');
+
+         const mobilePrice=document.getElementById('mobilePrice').innerText;
+         const mobilePriceValue=parseFloat(mobilePrice);
+         totalPrice=mobilePriceValue+1219;
+         document.getElementById('mobilePrice').innerText=totalPrice;
+
+      })
+      const incrementBtn2=document.getElementById('incrementBtn2');
+      incrementBtn2.addEventListener('click',function(){
+         const numberOfProduct=inc('input-2');
+         const casePrice=document.getElementById('casePrice').innerText;
+         const casePriceValue=parseFloat(casePrice);
+         totalPrice=casePriceValue+59;
+         document.getElementById('casePrice').innerText=totalPrice;
+
+      })
+
+      // decrement button event handler
+      const decrementBtn=document.getElementById('decrementBtn');
+      decrementBtn.addEventListener('click',function(){
+         const numberOfProduct=dec('input-1');
+
+         const mobilePrice = document.getElementById('mobilePrice').innerText;
+         const mobilePriceValue = parseFloat(mobilePrice);
+         let totalPrice = mobilePriceValue - 1219;
+         if(numberOfProduct<=1)
+         {
+            totalPrice =1219;
+         }
+         document.getElementById('mobilePrice').innerText = totalPrice;
+      })
+      const decrementBtn2=document.getElementById('decrementBtn2');
+      decrementBtn2.addEventListener('click',function(){
+         const numberOfProduct=dec('input-2');
+
+         const casePrice = document.getElementById('casePrice').innerText;
+         const casePriceValue = parseFloat(casePrice);
+         let totalPrice = casePriceValue - 59;
+         if(numberOfProduct<=1)
+         {
+            totalPrice =59;
+         }
+         document.getElementById('casePrice').innerText = totalPrice;
+      })
+
+
+      function inc(id){
+         const cartInput = document.getElementById(id).value;
+         const cartInputValue = parseFloat(cartInput);
+         const newValue = cartInputValue + 1;
+         document.getElementById(id).value = newValue;
+         return newValue;
+      }
+      function dec(id){
+         const cartInput = document.getElementById(id).value;
+         const cartInputValue = parseFloat(cartInput);
+         let newValue = cartInputValue - 1;
+         if (newValue < 1) {
+            newValue = 1;
+         }
+         document.getElementById(id).value = newValue;
+         return newValue;
+         
+      }
+   </script>
 </body>
 
 </html>
