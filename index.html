@@ -125,7 +125,8 @@
          const phonePrice = stringToNumber('mobilePrice');
          const phoneCasePrice = stringToNumber('casePrice');
          document.getElementById('subtotal').innerText = phonePrice + phoneCasePrice;
-         let tax=parseFloat( (phonePrice + phoneCasePrice)*0.04); //assuming there is 4% vat
+         let tax= (phonePrice + phoneCasePrice)*0.04; 
+         tax=parseFloat(tax.toFixed(2));//assuming there is 4% vat
          document.getElementById('tax').innerText = tax;
          document.getElementById('total').innerText = phoneCasePrice+phonePrice+tax;
       })
