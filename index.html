@@ -64,14 +64,14 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$1,278</h5>
-                        <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$ <span id="subtotal">1,278</span></h5>
+                        <h5>$<span id="tax">0</span></h5>
+                        <h5>$<span id="total">1,278</span></h5>
                      </div>
                   </div>
                </div>
                <div class="col-md-12 pt-4 pb-4">
-                  <button type="button" class="btn btn-success check-out">Check Out</button>
+                  <button id="checkoutBtn" type="button" class="btn btn-success check-out">Check Out</button>
                </div>
             </div>
          </div>
@@ -83,21 +83,16 @@
       // increment button event handler
       const incrementBtn=document.getElementById('incrementBtn');
       incrementBtn.addEventListener('click',function(){
-         const numberOfProduct=inc('input-1');
 
-         const mobilePrice=document.getElementById('mobilePrice').innerText;
-         const mobilePriceValue=parseFloat(mobilePrice);
-         totalPrice=mobilePriceValue+1219;
-         document.getElementById('mobilePrice').innerText=totalPrice;
+         inc('input-1');
+         add('mobilePrice',1219);
 
       })
+      
       const incrementBtn2=document.getElementById('incrementBtn2');
       incrementBtn2.addEventListener('click',function(){
-         const numberOfProduct=inc('input-2');
-         const casePrice=document.getElementById('casePrice').innerText;
-         const casePriceValue=parseFloat(casePrice);
-         totalPrice=casePriceValue+59;
-         document.getElementById('casePrice').innerText=totalPrice;
+         inc('input-2');
+         add('casePrice',59)
 
       })
 
@@ -105,10 +100,7 @@
       const decrementBtn=document.getElementById('decrementBtn');
       decrementBtn.addEventListener('click',function(){
          const numberOfProduct=dec('input-1');
-
-         const mobilePrice = document.getElementById('mobilePrice').innerText;
-         const mobilePriceValue = parseFloat(mobilePrice);
-         let totalPrice = mobilePriceValue - 1219;
+         let totalPrice = sub('mobilePrice',1219);
          if(numberOfProduct<=1)
          {
             totalPrice =1219;
@@ -119,9 +111,7 @@
       decrementBtn2.addEventListener('click',function(){
          const numberOfProduct=dec('input-2');
 
-         const casePrice = document.getElementById('casePrice').innerText;
-         const casePriceValue = parseFloat(casePrice);
-         let totalPrice = casePriceValue - 59;
+         let totalPrice = sub('casePrice',59);
          if(numberOfProduct<=1)
          {
             totalPrice =59;
@@ -129,6 +119,24 @@
          document.getElementById('casePrice').innerText = totalPrice;
       })
 
+      // subtotal area and checkout button event handler
+      checkoutBtn=document.getElementById('checkoutBtn');
+      checkoutBtn.addEventListener('click',function(){
+         const phonePrice = stringToNumber('mobilePrice');
+         const phoneCasePrice = stringToNumber('casePrice');
+         document.getElementById('subtotal').innerText = phonePrice + phoneCasePrice;
+         let tax=parseFloat( (phonePrice + phoneCasePrice)*0.04); //assuming there is 4% vat
+         document.getElementById('tax').innerText = tax;
+         document.getElementById('total').innerText = phoneCasePrice+phonePrice+tax;
+      })
+     
+
+
+      function stringToNumber(id){
+         value=document.getElementById(id).innerText;
+         number=parseFloat(value);
+         return number;
+      }
 
       function inc(id){
          const cartInput = document.getElementById(id).value;
@@ -137,7 +145,8 @@
          document.getElementById(id).value = newValue;
          return newValue;
       }
-      function dec(id){
+
+      function dec(id) {
          const cartInput = document.getElementById(id).value;
          const cartInputValue = parseFloat(cartInput);
          let newValue = cartInputValue - 1;
@@ -146,7 +155,20 @@
          }
          document.getElementById(id).value = newValue;
          return newValue;
-         
+      }
+
+      function add(id,value){
+         const cartInput = document.getElementById(id).innerText;
+         const cartInputValue = parseFloat(cartInput);
+         const newValue = cartInputValue + value;
+         document.getElementById(id).innerText = newValue;
+      }
+      
+      function sub(id, value) {
+         const cartInput = document.getElementById(id).innerText;
+         const cartInputValue = parseFloat(cartInput);
+         const newValue = cartInputValue - value;
+         return newValue;
       }
    </script>
 </body>
